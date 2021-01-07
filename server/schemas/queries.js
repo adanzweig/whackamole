@@ -59,14 +59,14 @@ const RootQuery = new GraphQLObjectType({
         }
     },
     speedScore: {
-        type: ScoreType,
+        type: new GraphQLList(ScoreType),
         args: { speed:{ type: GraphQLInt } },
         resolve(parentValue, args) {
-          const query = `SELECT * FROM scores WHERE speed=$1 order by score desc limit 1`;
+          const query = `SELECT * FROM scores WHERE speed=$1 order by score desc limit 5`;
           const values = [args.speed];
   
           return db
-            .one(query, values)
+            .any(query, values)
             .then(res => res)
             .catch(err => err);
         }

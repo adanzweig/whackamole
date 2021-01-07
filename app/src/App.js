@@ -8,7 +8,10 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./components/auth/Login";
 import UserScore from "./components/user/UserScore";
 import Authenticated from './components/auth/Authenticated';
-
+import HomeScreen from './components/screens/HomeScreen';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-multi-switch.min.css';
+import GameScreens from "./components/game/GameScreens";
 
 export default function App() {
   return (
@@ -22,9 +25,7 @@ export default function App() {
             <Login />
           </Route>
           <Authenticated>
-            <Route path={"/"}>
-              <UserScore />
-            </Route>
+            <GameScreens />
           </Authenticated>
         </Switch>
       </BrowserRouter>
