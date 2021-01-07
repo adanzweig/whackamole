@@ -22,12 +22,12 @@ class UserScore extends React.Component {
         'Content-Type': 'application/json',
         Authorization: "Bearer " + localStorage.getItem("@token"),
       },
-      body: JSON.stringify({ query: 'query getScore($userId: Int!) { scores(userId: $userId) { userId,score,speed,id,}}',
-      operationName: 'getScore',
-      variables: { userId: 1 } }),
+      body: JSON.stringify({ query: 'query usersScore($user_id: String!) { usersScore(user_id: $user_id) { user_id,score,speed,id,}}',
+      operationName: 'usersScore',
+      variables: { user_id: localStorage.getItem('@user') } }),
     })
     .then(res => res.json())
-    .then(res => this.setState({isLoaded:true,userInfo:res.data.scores}));
+    .then(res => this.setState({isLoaded:true,userInfo:res.data.usersScore}));
   }
   render(){
     if(this.state.isLoaded){

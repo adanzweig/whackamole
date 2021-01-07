@@ -19,8 +19,8 @@ export default function Login() {
         if (token) {
           //5 - put the token at localStorage (We'll use this to make requests)
           localStorage.setItem("@token", token);
-          console.log(result);
           localStorage.setItem("@name", result.user.displayName);
+          localStorage.setItem("@user", result.user.email);
           //6 - navigate user to his high scores
           history.push("/user-score");
         }
