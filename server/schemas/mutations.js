@@ -11,8 +11,8 @@ const RootMutation = new GraphQLObjectType({
       type: ScoreType,
       args: {
         user_id: { type: GraphQLString },
-        speed: { type: GraphQLString },
-        score: { type: GraphQLString }
+        speed: { type: graphql.GraphQLInt },
+        score: { type: graphql.GraphQLInt }
       },
       resolve(parentValue, args) {
         const query = `INSERT INTO scores(user_id, speed, score,created_at) VALUES ($1, $2, $3, $4) RETURNING user_id`;

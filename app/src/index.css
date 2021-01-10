@@ -11,3 +11,99 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.velocitySelector{
+  font-size: 38px;
+  height: 70px !important;
+}
+.toggle__slider{
+  height: 61px !important;
+  background-color: black !important;
+  margin: 2px 6px;
+
+}
+.toggle__knob:first-child{
+  
+  color:green !important;
+  line-height: inherit;
+  margin: 2px 7px 2px 0px;
+  opacity:0.6;
+}
+.toggle__knob:nth-child(2){
+  color:yellow !important;
+  line-height: inherit;
+  margin: 2px 7px 2px 0px;
+  opacity:0.6;
+}
+.toggle__knob:nth-child(3){
+  /* background-color:red; */
+  
+  color:red !important;
+  line-height: inherit;
+  margin: 2px 7px 2px 0px;
+  opacity:0.6;
+}
+.toggle__knob--active{
+  opacity:1 !important;
+  color:inherit;
+}
+.overlayPrepare{
+  background-color: black;
+  opacity:0.6;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  top: 40px;
+}
+.overlayPrepare div{
+  font-size:30px;
+  left: 45%;
+  top: 20%;
+  color: #fff;
+  position: absolute;
+}
+.overlayPrepare h4{
+  color: #fff;
+    top: 20%;
+    position: absolute;
+    left: 38%;
+}
+body{
+  background-image: url('images/park.png');
+}
+.mole{
+  width: 100%;
+  height: 200px;
+  overflow:hidden;
+  position: relative;
+  background-image: url('images/hole.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+}
+.mole_inactive{
+  /* background-color:red; */
+}
+.mole_active{
+  /* background-color: green; */
+  cursor:pointer;
+}
+.mole img{
+  width:60%;
+  position: absolute;
+  top:210px;
+  margin-left:-20%;
+}
+.mole_active.speed_3 img{
+  animation: dig-up 0.3s;
+}
+.mole_active.speed_2 img{
+  animation: dig-up 0.5s;
+}
+.mole_active.speed_1 img{
+  animation: dig-up 1s;
+}
+@keyframes dig-up {
+  from {top: 210px;display:block}
+  to {top: 50px;display:block;}
+}
