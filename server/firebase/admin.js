@@ -1,6 +1,6 @@
 const firebase = require("firebase-admin");
 
-const credentials = require("../whackamole-3015f-firebase-adminsdk-xi3jr-97acd0da26.json");
+const credentials = require("../firebase.json");
 
 firebase.initializeApp({
   credential: firebase.credential.cert(credentials),

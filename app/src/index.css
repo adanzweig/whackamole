@@ -95,13 +95,13 @@ body{
   margin-left:-20%;
 }
 .mole_active.speed_3 img{
-  animation: dig-up 0.3s;
+  animation: dig-up 0.7s;
 }
 .mole_active.speed_2 img{
-  animation: dig-up 0.5s;
+  animation: dig-up 1.0s;
 }
 .mole_active.speed_1 img{
-  animation: dig-up 1s;
+  animation: dig-up 2s;
 }
 @keyframes dig-up {
   from {top: 210px;display:block}
