@@ -1,15 +1,27 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import  { Redirect } from 'react-router-dom'
 import { auth, firebase } from "../../firebase";
-
-export default function Login() {
-  const history = useHistory();
-  async function googleLogin() {
+import {Button} from 'react-bootstrap';
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      readyToRedirect:false
+    }
+    this.googleLogin = this.googleLogin.bind(this);
+    
+  }
+componentDidMount(){
+  
+}
+googleLogin() {
+// async googleLogin() {
     //1 - init Google Auth Provider
     const provider = new firebase.auth.GoogleAuthProvider();
     //2 - create the popup signIn
-    await auth.signInWithPopup(provider).then(
+    auth.signInWithPopup(provider).then(
       async (result) => {
+        
         //3 - pick the result and store the token
         const token = await auth?.currentUser?.getIdToken(true);
         //4 - check if have token in the current user
@@ -19,7 +31,9 @@ export default function Login() {
           localStorage.setItem("@name", result.user.displayName);
           localStorage.setItem("@user", result.user.email);
           //6 - navigate user to his high scores
-          history.push("/user-score");
+          // history.push("/user-score");
+          this.setState({readyToRedirect:true})
+          
         }
       },
       function (error) {
@@ -27,11 +41,18 @@ export default function Login() {
       }
     );
   }
-  return (
-    <div>
-      <button onClick={googleLogin} className="login-button">
-        LOGIN
-      </button>
+  render (){
+    return (
+      <div>
+      <img src="logoblanco.png" className="logo"/>
+        {this.state.readyToRedirect?<Redirect to="/" />:""}
+        <h1>Welcome!</h1>
+        <Button variant="danger" onClick={this.googleLogin.bind(this)}>
+        <img src="/loginGoogle.png"/>
+        </Button>
+        
     </div>
-  );
+    );
+  }
 }
+export default Login;

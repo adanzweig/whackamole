@@ -36,7 +36,7 @@ const RootQuery = new GraphQLObjectType({
         type: new GraphQLList(ScoreType),
         args: { user_id: { type: GraphQLString } },
         resolve(parentValue, args) {
-          const query = `SELECT id,speed,user_id,score FROM scores WHERE user_id=$1 group by speed,id,user_id,score`;
+          const query = `SELECT id,speed,user_id,score FROM scores WHERE user_id=$1 group by speed,id,user_id,score order by score desc limit 10`;
           const values = [args.user_id];
   
           return db

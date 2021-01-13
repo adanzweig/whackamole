@@ -10,17 +10,20 @@ class Game extends React.Component {
       this.state = {
           play:false,
           timerToStart:3,
-          gameTimer:15,
+          gameTimer:30,
           gameOver:false,
           points:0,
           myScore:0,
           bestScore:0
       };
       this.whack = this.whack.bind(this);
+      this.replay = this.replay.bind(this);
 
   }
   componentDidMount(){
-   this.prepareGame();
+    this.getMyHighScore();
+    this.getSpeedHighScore();
+    this.prepareGame();
   }
   whack(){
     this.setState({points: this.state.points + 1});
@@ -49,6 +52,49 @@ class Game extends React.Component {
         }
       },1000);
   }
+  getMyHighScore(){
+      var query = 'query usersScoreSpeed($user_id: String!,$speed:Int!) { usersScoreSpeed(user_id: $user_id,speed: $speed) { user_id,score,speed,id,}}'
+      var operationName = 'usersScoreSpeed';
+      var variables = { user_id: localStorage.getItem('@user'),speed:this.props.speed };
+    
+    fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+      },
+      body: JSON.stringify({ query: query,
+      operationName: operationName,
+      variables: variables }),
+    })
+    .then(res => res.json())
+    .then(res => 
+      this.setState({myScore:res.data[operationName].score})
+      );
+  }
+  getSpeedHighScore(){
+      var query = 'query speedScore($speed:Int!) { speedScore(speed: $speed) { user_id,score,speed,id,}}'
+      var operationName = 'speedScore';
+      var variables = { user_id: localStorage.getItem('@user'),speed:this.props.speed };
+    
+    fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+      },
+      body: JSON.stringify({ query: query,
+      operationName: operationName,
+      variables: variables }),
+    })
+    .then(res => res.json())
+    .then((res) => {
+        if(res.data[operationName][0] != undefined){
+          this.setState({bestScore:res.data[operationName][0].score})
+        }
+    }
+    );
+  }
   endGame(){
     this.setState({play:false,gameOver:true});
     var query = 'mutation($user_id: String, $speed: Int, $score: Int) {\
@@ -75,7 +121,7 @@ class Game extends React.Component {
     
   }
   replay(){
-    this.setState({timerToStart:3,gameOver:false,points:0,gameTimer:15});
+    this.setState({timerToStart:3,gameOver:false,points:0,gameTimer:30});
     this.prepareGame();
   }
   transformToText(speed){
@@ -102,23 +148,34 @@ class Game extends React.Component {
     }
       return (
         <div>
+        <img src="logoblanco.png" className="logo small"/>
         { (!this.state.play && !this.state.gameOver)? <div className="overlayPrepare"><div>Prepare yourself!<br/>{this.state.timerToStart}</div></div>:''}
-          <Container>
-            <Row>
+          <Container >
+            <Row className="gameInfoStats">
               <Col>
                 <div>Difficulty: { this.transformToText(this.props.speed) }</div>
               </Col>
               <Col>
-                <div className="myScore"> My highscore: {this.state.myScore}</div>
+                <div className="myScore panel-body"> My highscore: <b>{this.state.myScore}</b></div>
               </Col>
               <Col>
-                <div className="bestScore"> Best: {this.state.bestScore}</div>
+                <div className="bestScore"> Best: <b>{this.state.bestScore}</b></div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h3 className="gameTimer">{this.state.gameTimer} Seconds Left!</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div className="currentScore">Current: { this.state.points }</div>
               </Col>
             </Row>
            </Container>
-           <h3>{this.state.gameTimer} Seconds Left!</h3>
-           <div className="currentScore">Current: { this.state.points }</div>
-           { this.state.gameOver? <div className="overlayPrepare"><h4>Game Over<br/> Your final score was: {this.state.points}</h4></div>:''}
+           
+           { this.state.gameOver? <div className="overlayPrepare"><h4>Game Over<br/> Your final score was: {this.state.points}</h4>
+           <br/><Button variant="success" onClick={()=>this.replay()}> Replay </Button></div>:''}
            {(!this.state.gameOver && this.state.play)?<Container>{board}</Container>:''}
         </div>
       )

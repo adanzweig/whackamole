@@ -16,7 +16,7 @@ class HomeScreen extends React.Component {
   render(){
       return (
         <div>
-            <img src="https://via.placeholder.com/500x150"></img>
+        <img src="logoblanco.png" className="logo"/>
             <div className="speedSelector">
             <Toggle onChange={value => this.props.changeSpeed(value)} className="velocitySelector">
                 <Knob value="1" className="easyKnob">Easy</Knob>
@@ -31,7 +31,13 @@ class HomeScreen extends React.Component {
                         <Col><Button variant="primary" onClick={()=>this.props.displayStats(1)}>High scores</Button></Col>
                     </Row>
                     <Row>
-                        <Col><Button variant="success" onClick={()=>this.props.startGame()}>Play</Button></Col>
+                        <Col><Button variant="success" onClick={()=>this.props.startGame()} className="btn-lg">Play</Button></Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <br/>
+                        <Button variant="danger" href="/logout" className="btn-lg">Logout</Button>
+                      </Col>
                     </Row>
             </Container>   
         </div>

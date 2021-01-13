@@ -6,6 +6,7 @@ import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Login from "./components/auth/Login";
+import Logout from "./components/auth/Logout";
 import UserScore from "./components/user/UserScore";
 import Authenticated from './components/auth/Authenticated';
 import HomeScreen from './components/screens/HomeScreen';
@@ -17,10 +18,10 @@ export default function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          {/* <Route path='/logout'> */}
-            {/* <Logout /> */}
-          {/* </Route> */}
-          <Route path={"/login"}>
+          <Route path='/logout'>
+            <Logout />
+          </Route>
+          <Route path='/login'>
             <Login />
           </Route>
           <Authenticated>
