@@ -27,7 +27,6 @@ class Mole extends React.Component {
     }
     moleShowRandomFunction(){
         var showIn = Math.floor(Math.random() * 4000)+3000;
-        console.log(showIn);
         var t = this;
         setTimeout(function(){ 
             t.setState({status:'active'});

@@ -8,9 +8,8 @@ class Authenticated extends Component{
         };
     }
     componentDidMount(){
-        console.log("TEST AUTH");
+        
         const token = localStorage.getItem("@token");
-        console.log(token);
         if(token == undefined || token == null || token == ""){
             this.props.history.push('/login');
         }

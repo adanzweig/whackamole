@@ -68,8 +68,12 @@ class Game extends React.Component {
       variables: variables }),
     })
     .then(res => res.json())
-    .then(res => 
-      this.setState({myScore:res.data[operationName].score})
+    .then((res) => 
+        {
+          if(res.data[operationName] != null){
+            this.setState({myScore:res.data[operationName].score})
+          }
+        }
       );
   }
   getSpeedHighScore(){
@@ -103,7 +107,6 @@ class Game extends React.Component {
       }\
     }';
     var operationName = 'addScore';
-    console.log(this.props);
     var variables = { speed: this.props.speed,score:this.state.points,user_id:localStorage.getItem('@user') };
     fetch('http://localhost:4000/graphql', {
       method: 'POST',

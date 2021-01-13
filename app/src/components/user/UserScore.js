@@ -21,7 +21,6 @@ class UserScore extends React.Component {
     }else{
       var query = 'query speedScore($speed: Int!) { speedScore(speed: $speed) { user_id,score,speed,id,}}'
       var operationName = 'speedScore';
-      console.log(this.props);
       var variables = { speed: this.props.speed };
     }
     
