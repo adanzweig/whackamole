@@ -15,9 +15,10 @@ const schema = new GraphQLSchema({
 
 // Create an express server and a GraphQL endpoint
 var app = express();
+const port = 4000
 app.use(cors());
 
-// app.use("/", authMiddleware);
+app.use("/", authMiddleware);
 
 
 app.use('/graphql',  graphqlHTTP({
@@ -25,4 +26,4 @@ app.use('/graphql',  graphqlHTTP({
     graphiql: true,
   }));
 
-app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
+app.listen(port, () => console.log('Express GraphQL Server Now Running On localhost:'+port+'/graphql'));

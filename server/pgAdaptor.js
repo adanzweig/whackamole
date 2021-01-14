@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { parse } = require('dotenv');
 const pgPromise = require('pg-promise');
 
 const pgp = pgPromise({}); // Empty object means no additional config required

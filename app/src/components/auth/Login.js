@@ -44,11 +44,11 @@ googleLogin() {
   render (){
     return (
       <div>
-      <img src="logoblanco.png" className="logo"/>
+      <img src="logoblanco.png" className="logo" alt="Logo"/>
         {this.state.readyToRedirect?<Redirect to="/" />:""}
         <h1>Welcome!</h1>
         <Button variant="danger" onClick={this.googleLogin.bind(this)}>
-        <img src="/loginGoogle.png"/>
+        <img src="/loginGoogle.png" alt="Login with google"/>
         </Button>
         
     </div>

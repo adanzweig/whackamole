@@ -1,6 +1,5 @@
 import React from "react";
-import ReactDOM from 'react-dom';
-import { Button,Row,Col,Container,Alert } from 'react-bootstrap';
+import { Button,Row,Col,Container } from 'react-bootstrap';
 import Toggle,{Knob} from 'react-toggle-knob'; 
 
 class HomeScreen extends React.Component {
@@ -16,7 +15,7 @@ class HomeScreen extends React.Component {
   render(){
       return (
         <div>
-        <img src="logoblanco.png" className="logo"/>
+        <img src="logoblanco.png" className="logo" alt="logo"/>
             <div className="speedSelector">
             <Toggle onChange={value => this.props.changeSpeed(value)} className="velocitySelector">
                 <Knob value="1" className="easyKnob">Easy</Knob>

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {withRouter,Route} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 class Authenticated extends Component{
     constructor(props){
         super(props);
@@ -10,7 +10,7 @@ class Authenticated extends Component{
     componentDidMount(){
         
         const token = localStorage.getItem("@token");
-        if(token == undefined || token == null || token == ""){
+        if(token === undefined || token === null || token === ""){
             this.props.history.push('/login');
         }
     }

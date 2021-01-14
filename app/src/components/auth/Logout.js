@@ -1,6 +1,5 @@
 import React from "react";
 import  { Redirect } from 'react-router-dom'
-import { auth, firebase } from "../../firebase";
 
 class Logout extends React.Component {
     constructor(props) {

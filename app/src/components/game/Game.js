@@ -1,7 +1,5 @@
 import React from "react";
-import ReactDOM from 'react-dom';
-import { Button,Row,Col,Container,Alert } from 'react-bootstrap';
-import HomeScreen from "../screens/HomeScreen";
+import { Button,Row,Col,Container } from 'react-bootstrap';
 import Mole from "./Mole";
 
 class Game extends React.Component {
@@ -32,7 +30,7 @@ class Game extends React.Component {
     var t = this;
     var x = setInterval(function() {
       t.setState({timerToStart:t.state.timerToStart-1});
-        if(t.state.timerToStart == 0){
+        if(t.state.timerToStart === 0){
           clearInterval(x);
           t.startGame();
         }
@@ -46,7 +44,7 @@ class Game extends React.Component {
       var t = this;
       var y = setInterval(function(){
         t.setState({gameTimer:t.state.gameTimer-1});
-        if(t.state.gameTimer == 0){
+        if(t.state.gameTimer === 0){
           clearInterval(y);
           t.endGame();
         }
@@ -70,9 +68,14 @@ class Game extends React.Component {
     .then(res => res.json())
     .then((res) => 
         {
-          if(res.data[operationName] != null){
+          if(res.message !== null || res.message !== undefined){
+             console.log(res);
+          }
+          if(res.data[operationName] !== null){
             this.setState({myScore:res.data[operationName].score})
           }
+        
+          
         }
       );
   }
@@ -93,7 +96,7 @@ class Game extends React.Component {
     })
     .then(res => res.json())
     .then((res) => {
-        if(res.data[operationName][0] != undefined){
+        if(res.data[operationName] !== undefined){
           this.setState({bestScore:res.data[operationName][0].score})
         }
     }
@@ -101,12 +104,7 @@ class Game extends React.Component {
   }
   endGame(){
     this.setState({play:false,gameOver:true});
-    var query = 'mutation($user_id: String, $speed: Int, $score: Int) {\
-      addScore (user_id: $user_id, speed: $speed, score: $score) {\
-          user_id\
-      }\
-    }';
-    var operationName = 'addScore';
+    var query = 'mutation($user_id: String, $speed: Int, $score: Int) {addScore (user_id: $user_id, speed: $speed, score: $score) {user_id}}';
     var variables = { speed: this.props.speed,score:this.state.points,user_id:localStorage.getItem('@user') };
     fetch('http://localhost:4000/graphql', {
       method: 'POST',
@@ -131,13 +129,12 @@ class Game extends React.Component {
     switch(speed){
       case 1:
         return 'Easy';
-        break;
       case 2: 
         return 'Medium';
-        break;
       case 3:
         return 'Hard';
-        break;
+      default:
+        return "";
     }
   }
   render(){
@@ -151,7 +148,7 @@ class Game extends React.Component {
     }
       return (
         <div>
-        <img src="logoblanco.png" className="logo small"/>
+        <img src="logoblanco.png" className="logo small" alt="logo small"/>
         { (!this.state.play && !this.state.gameOver)? <div className="overlayPrepare"><div>Prepare yourself!<br/>{this.state.timerToStart}</div></div>:''}
           <Container >
             <Row className="gameInfoStats">

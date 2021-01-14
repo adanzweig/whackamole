@@ -7,9 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
-import UserScore from "./components/user/UserScore";
 import Authenticated from './components/auth/Authenticated';
-import HomeScreen from './components/screens/HomeScreen';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GameScreens from "./components/game/GameScreens";
 

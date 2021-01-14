@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 
 class Mole extends React.Component {
     constructor(props) {
@@ -22,6 +21,8 @@ class Mole extends React.Component {
             case 3:
                 this.setState({showForSeconds:700});
                 break;
+            default:
+                break;
         }
         this.moleShowRandomFunction();
     }
@@ -37,7 +38,7 @@ class Mole extends React.Component {
          }, showIn);
     }
     whack(){
-        if(this.state.status == 'active'){
+        if(this.state.status === 'active'){
             this.props.whack();
             this.setState({wacked:true,status:'inactive'})
         }
@@ -45,7 +46,7 @@ class Mole extends React.Component {
     render(){
         return(
             <div key="mole" className={`mole mole_${this.state.status} speed_${this.props.speed}`} onClick={this.whack.bind(this)}>
-                <img src="/mole.png" draggable="false"/>
+                <img src="/mole.png" draggable="false" alt="mole"/>
             </div>
         );
     }

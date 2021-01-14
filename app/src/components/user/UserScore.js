@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 import {Table} from 'react-bootstrap';
 class UserScore extends React.Component {
   constructor(props) {
@@ -14,14 +13,17 @@ class UserScore extends React.Component {
   }
   getMyScores(){
     this.setState({isLoaded:false})
-    if(this.props.speed == undefined){
-      var query = 'query usersScore($user_id: String!) { usersScore(user_id: $user_id) { user_id,score,speed,id,}}'
-      var operationName = 'usersScore';
-      var variables = { user_id: localStorage.getItem('@user') };
+    var query = "";
+    var operationName = "";
+    var variables = "";
+    if(this.props.speed === undefined){
+      query = 'query usersScore($user_id: String!) { usersScore(user_id: $user_id) { user_id,score,speed,id,}}'
+      operationName = 'usersScore';
+      variables = { user_id: localStorage.getItem('@user') };
     }else{
-      var query = 'query speedScore($speed: Int!) { speedScore(speed: $speed) { user_id,score,speed,id,}}'
-      var operationName = 'speedScore';
-      var variables = { speed: this.props.speed };
+      query = 'query speedScore($speed: Int!) { speedScore(speed: $speed) { user_id,score,speed,id,}}'
+      operationName = 'speedScore';
+      variables = { speed: this.props.speed };
     }
     
     fetch('http://localhost:4000/graphql', {
@@ -42,12 +44,11 @@ class UserScore extends React.Component {
     switch(speed){
       case 1:
         return 'Easy';
-        break;
       case 2: 
         return 'Medium';
-        break;
       case 3:
         return 'Hard';
+      default:
         break;
     }
   }
@@ -56,12 +57,12 @@ class UserScore extends React.Component {
       return (
           <div className="container" key="UserScore">
           <h1>{this.props.title}</h1>
-          <h3>{this.props.speed == undefined?'':this.transformToText(this.props.speed)}</h3>
+          <h3>{this.props.speed === undefined?'':this.transformToText(this.props.speed)}</h3>
           <Table striped bordered hover>
           <thead>
             <tr>
               <th></th>
-              {this.props.speed == undefined?<th>Dificulty</th>:<th>User</th>}
+              {this.props.speed === undefined?<th>Dificulty</th>:<th>User</th>}
               <th>Score</th>
             </tr>
           </thead>
@@ -70,7 +71,7 @@ class UserScore extends React.Component {
               this.state.userInfo.map((score,idx)=>(
                 <tr>
                   <td><h3>#{parseInt(idx)+1}</h3></td>
-                  {this.props.speed == undefined?<td>{this.transformToText(score.speed)}</td>:<td>{score.user_id}</td>}
+                  {this.props.speed === undefined?<td>{this.transformToText(score.speed)}</td>:<td>{score.user_id}</td>}
                   <td>{score.score}</td>
                 
                 </tr>
