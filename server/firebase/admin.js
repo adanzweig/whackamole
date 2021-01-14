@@ -1,6 +1,7 @@
+require('dotenv').config()
 const firebase = require("firebase-admin");
 
-const credentials = require("../firebase.json");
+const credentials = process.env.FIREBASE_JSON;
 
 firebase.initializeApp({
   credential: firebase.credential.cert(credentials),
