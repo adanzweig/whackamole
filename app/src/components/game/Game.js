@@ -1,5 +1,6 @@
 import React from "react";
 import { Button,Row,Col,Container } from 'react-bootstrap';
+import { HOSTNAME } from "../../config/constants";
 import Mole from "./Mole";
 
 class Game extends React.Component {
@@ -55,7 +56,7 @@ class Game extends React.Component {
       var operationName = 'usersScoreSpeed';
       var variables = { user_id: localStorage.getItem('@user'),speed:this.props.speed };
     
-    fetch('http://localhost:4000/graphql', {
+    fetch(HOSTNAME+'/graphql', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -68,8 +69,8 @@ class Game extends React.Component {
     .then(res => res.json())
     .then((res) => 
         {
-          if(res.message !== null || res.message !== undefined){
-             console.log(res);
+          if(res.message !== undefined && res.message === 'Could not authorize'){
+            document.location = '/Logout';
           }
           if(res.data[operationName] !== null){
             this.setState({myScore:res.data[operationName].score})
@@ -84,7 +85,7 @@ class Game extends React.Component {
       var operationName = 'speedScore';
       var variables = { user_id: localStorage.getItem('@user'),speed:this.props.speed };
     
-    fetch('http://localhost:4000/graphql', {
+    fetch(HOSTNAME+'/graphql', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -96,6 +97,9 @@ class Game extends React.Component {
     })
     .then(res => res.json())
     .then((res) => {
+      if(res.message !== undefined && res.message === 'Could not authorize'){
+        document.location = '/Logout';
+      }
         if(res.data[operationName] !== undefined){
           this.setState({bestScore:res.data[operationName][0].score})
         }
@@ -106,7 +110,7 @@ class Game extends React.Component {
     this.setState({play:false,gameOver:true});
     var query = 'mutation($user_id: String, $speed: Int, $score: Int) {addScore (user_id: $user_id, speed: $speed, score: $score) {user_id}}';
     var variables = { speed: this.props.speed,score:this.state.points,user_id:localStorage.getItem('@user') };
-    fetch('http://localhost:4000/graphql', {
+    fetch(HOSTNAME+'/graphql', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',

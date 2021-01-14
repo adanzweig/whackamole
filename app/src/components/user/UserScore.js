@@ -1,5 +1,6 @@
 import React from "react";
 import {Table} from 'react-bootstrap';
+import {HOSTNAME} from "../../config/constants";
 class UserScore extends React.Component {
   constructor(props) {
       super(props);
@@ -26,7 +27,7 @@ class UserScore extends React.Component {
       variables = { speed: this.props.speed };
     }
     
-    fetch('http://localhost:4000/graphql', {
+    fetch(HOSTNAME+'/graphql', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -37,8 +38,13 @@ class UserScore extends React.Component {
       variables: variables }),
     })
     .then(res => res.json())
-    .then(res => this.setState({isLoaded:true,
-      userInfo:res.data[operationName]}));
+    .then((res) => 
+      {
+        if(res.message !== undefined && res.message === 'Could not authorize'){
+          document.location = '/Logout';
+        }
+        this.setState({isLoaded:true,userInfo:res.data[operationName]});
+      })
   }
   transformToText(speed){
     switch(speed){

@@ -9,7 +9,7 @@ import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 import Authenticated from './components/auth/Authenticated';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import GameScreens from "./components/game/GameScreens";
+import GameScreens from "./components/screens/GameScreen";
 
 export default function App() {
   return (
